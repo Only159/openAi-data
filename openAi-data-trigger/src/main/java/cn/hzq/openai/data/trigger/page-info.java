@@ -1,0 +1,1 @@
+package cn.hzq.openai.data.trigger;

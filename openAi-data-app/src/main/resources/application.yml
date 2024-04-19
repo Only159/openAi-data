@@ -1,0 +1,5 @@
+spring:
+  config:
+    name: openAi-data
+  profiles:
+    active: dev
