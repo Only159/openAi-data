@@ -27,6 +27,16 @@ chatgml:
       api-host: https://open.bigmodel.cn/
       # 官网申请API-KEY
       api-key: 42e670f4c94232aafa9d2a6666ac286c.nLj8y9ZMex0HvaFB
+
+# 微信公众号配置信息
+# originalid：原始ID
+# appid：个人AppID
+# token：开通接口服务自定义设置
+wx:
+  config:
+    originalid: gh_1b019397ee04
+    appid: wxda294ce860f363fb
+    token: b8b6
 # 日志
 logging:
   level:

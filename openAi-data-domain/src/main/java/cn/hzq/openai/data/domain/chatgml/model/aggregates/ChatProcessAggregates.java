@@ -1,6 +1,6 @@
-package cn.hzq.openai.data.domain.openai.model.aggregates;
+package cn.hzq.openai.data.domain.chatgml.model.aggregates;
 
-import cn.hzq.openai.data.domain.openai.model.entitty.MessageEntity;
+import cn.hzq.openai.data.domain.chatgml.model.entitty.MessageEntity;
 import cn.hzq.openai.data.types.enums.ChatGMLModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

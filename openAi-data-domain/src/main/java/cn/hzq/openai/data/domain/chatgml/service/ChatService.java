@@ -1,14 +1,11 @@
-package cn.hzq.openai.data.domain.openai.service;
+package cn.hzq.openai.data.domain.chatgml.service;
 
 import cn.hzq.chatgml.model.ChatCompletionRequest;
 import cn.hzq.chatgml.model.ChatCompletionResponse;
-import cn.hzq.chatgml.model.Model;
-import cn.hzq.chatgml.model.Role;
-import cn.hzq.openai.data.domain.openai.model.aggregates.ChatProcessAggregates;
-import cn.hzq.openai.data.domain.openai.model.entitty.MessageEntity;
+import cn.hzq.openai.data.domain.chatgml.model.aggregates.ChatProcessAggregates;
+import cn.hzq.openai.data.domain.chatgml.model.entitty.MessageEntity;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Response;
 import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author 黄照权

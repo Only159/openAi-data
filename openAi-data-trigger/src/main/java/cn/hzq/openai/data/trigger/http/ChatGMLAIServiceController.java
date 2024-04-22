@@ -1,9 +1,11 @@
 package cn.hzq.openai.data.trigger.http;
 
-import cn.hzq.openai.data.domain.openai.model.aggregates.ChatProcessAggregates;
-import cn.hzq.openai.data.domain.openai.model.entitty.MessageEntity;
-import cn.hzq.openai.data.domain.openai.service.IChatService;
+import cn.hzq.openai.data.domain.auth.service.IAuthService;
+import cn.hzq.openai.data.domain.chatgml.model.aggregates.ChatProcessAggregates;
+import cn.hzq.openai.data.domain.chatgml.model.entitty.MessageEntity;
+import cn.hzq.openai.data.domain.chatgml.service.IChatService;
 import cn.hzq.openai.data.trigger.http.dto.ChatGMLRequestDTO;
+import cn.hzq.openai.data.types.common.Constants;
 import cn.hzq.openai.data.types.exception.ChatGMLException;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -12,21 +14,24 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.stream.Collectors;
 
 /**
  * @author 黄照权
  * @Date 2024/4/22
- * @Description
+ * @Description ChatGML AI 服务
  **/
 @Slf4j
 @RestController()
 @CrossOrigin("${app.config.cross-origin}")
-@RequestMapping("/api/${app.config.api-version}/")
+@RequestMapping("/api/${app.config.api-version}/chatgml/")
 public class ChatGMLAIServiceController {
 
     @Resource
     private IChatService chatService;
+    @Resource
+    private IAuthService authService;
 
 
     @PostMapping("chat/completions")
@@ -38,7 +43,21 @@ public class ChatGMLAIServiceController {
             response.setContentType("text/event-stream");
             response.setCharacterEncoding("UTF-8");
             response.setHeader("Cache-Control", "no-cache");
-            // 2、构建参数
+
+            // 2. 构建异步响应对象【对Token 过期拦截】
+            ResponseBodyEmitter emitter = new ResponseBodyEmitter(3 * 60 * 1000L);
+            boolean success = authService.checkToken(token);
+
+            if (!success) {
+                try {
+                    emitter.send(Constants.ResponseCode.TOKEN_ERROR.getCode());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                emitter.complete();
+                return emitter;
+            }
+            // 3、构建参数
             ChatProcessAggregates chatProcessAggregates = ChatProcessAggregates.builder()
                     .token(token)
                     .model(requestDTO.getModel())
@@ -51,7 +70,7 @@ public class ChatGMLAIServiceController {
                             .collect(Collectors.toList()))
                     .build();
             // 3、请求结果返回
-            return chatService.completions(chatProcessAggregates);
+            return chatService.completions(emitter,chatProcessAggregates);
         } catch (Exception e){
             log.error("流式应答，请求模型：{} 发生异常", requestDTO.getModel(), e);
             throw new ChatGMLException(e.getMessage());

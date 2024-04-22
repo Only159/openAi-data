@@ -1,4 +1,4 @@
-package cn.hzq.openai.data.domain.openai.model.entitty;
+package cn.hzq.openai.data.domain.chatgml.model.entitty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

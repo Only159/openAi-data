@@ -39,6 +39,22 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.hzq.chatgpt</groupId>
             <artifactId>chatgml-sdk-java</artifactId>
         </dependency>
@@ -46,6 +62,11 @@
             <groupId>cn.hzq.openAi</groupId>
             <artifactId>openAi-data-types</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.20</version>
         </dependency>
     </dependencies>
 
